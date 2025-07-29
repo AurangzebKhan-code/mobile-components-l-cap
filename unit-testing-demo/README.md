@@ -2,6 +2,34 @@
 
 A comprehensive demonstration project showcasing advanced testing strategies for React Native components using a dual approach with **Jest** (unit testing) and **Cypress** (component testing), featuring full TypeScript support and a sophisticated component architecture.
 
+## 📑 Quick Navigation
+
+| Section | Description |
+|---------|-------------|
+| [🚀 Project Overview](#-project-overview) | Purpose, goals, and key features |
+| [🛠 Technology Stack](#-technology-stack) | Core technologies and versions |
+| [📦 Installation](#-installation) | Setup instructions and prerequisites |
+| [🧪 Testing Commands](#-testing-commands) | All available test commands |
+| [🏗 Project Architecture](#-project-architecture) | Directory structure and component design |
+| [💡 Usage Examples](#-usage-examples) | Code examples and patterns |
+| [📚 Documentation](#-documentation) | Links to detailed documentation |
+| [🐛 Troubleshooting](#-troubleshooting-guide) | Common issues and solutions |
+
+## ⚡ Quick Start
+
+```bash
+# Clone and setup
+git clone <repository-url> && cd unit-testing-demo
+npm install
+
+# Run tests
+npm test              # Jest unit tests
+npm run cypress       # Cypress UI tests
+
+# View documentation
+open documentation.md
+```
+
 ## 🚀 Project Overview
 
 This project serves as a complete reference implementation for testing React Native applications with enterprise-grade quality standards. It addresses the complex challenges of testing React Native Paper components in browser environments while maintaining full compatibility with native mobile platforms.
@@ -56,6 +84,15 @@ arch -x86_64 npx cypress install
 
 ## 🧪 Testing Commands
 
+### Command Quick Reference
+| Command | Description | Use Case |
+|---------|-------------|----------|
+| `npm test` | Run Jest tests once | CI/CD pipelines |
+| `npm run test:watch` | Jest in watch mode | Development |
+| `npm run test:coverage` | Generate coverage report | Quality checks |
+| `npm run cypress` | Open Cypress UI | Interactive testing |
+| `npm run cypress:run` | Run Cypress headless | CI/CD pipelines |
+
 ```bash
 # Jest Unit Testing
 npm test                    # Run all Jest tests
@@ -71,6 +108,14 @@ open coverage/lcov-report/index.html
 ```
 
 ## 🏗 Project Architecture
+
+### Component Index
+| Component | Location | Description |
+|-----------|----------|-------------|
+| TLCButton | `src/components/tlc-button/` | Material Design button with events |
+| TLCLabel | `src/components/tlc-label/` | Text display with change detection |
+| ReactBaseTLCWrapper | `src/core/base/` | React Native wrapper base class |
+| Configuration Utils | `src/utils/` | Component configuration helpers |
 
 ### Directory Structure
 ```
@@ -123,6 +168,12 @@ unit-testing-demo/
 ├── tsconfig.test.json           # Test-specific TypeScript config
 └── package.json                 # Dependencies and scripts
 ```
+
+### Test File Index
+| Component | Unit Test | Component Test |
+|-----------|-----------|----------------|
+| TLCButton | `tests/unit/tlc-button.test.tsx` | `tests/component/tlc-button.cy.tsx` |
+| TLCLabel | `tests/unit/tlc-label.test.tsx` | `tests/component/tlc-label.cy.tsx` |
 
 ### Component Architecture
 
@@ -475,10 +526,26 @@ NODE_ENV=development npm run cypress
 | `jest-expo preset not found` | Reinstall with `npm install --save-dev jest-expo` |
 | `Cypress binary not found` | Run `npx cypress install` |
 
+## 📚 Documentation
+
+### Available Documentation
+| Document | Description | Location |
+|----------|-------------|----------|
+| **Comprehensive Documentation** | Full technical documentation with architecture details | [`documentation.md`](./documentation.md) |
+| **API Reference** | Complete API documentation for all components | [`documentation.md#api-documentation`](./documentation.md#api-documentation) |
+| **Testing Guide** | Detailed testing strategies and patterns | [`documentation.md#testing-strategy-and-coverage`](./documentation.md#testing-strategy-and-coverage) |
+| **Coverage Reports** | Interactive test coverage analysis | [`coverage/lcov-report/index.html`](./coverage/lcov-report/index.html) |
+
+### Quick Links
+- [Component API Reference](./documentation.md#api-documentation)
+- [Architecture Overview](./documentation.md#architecture-overview)
+- [Setup Instructions](./documentation.md#setup-and-usage-instructions)
+- [Code Patterns](./documentation.md#code-patterns-and-conventions)
+
 ## 📚 Additional Resources
 
 ### Documentation
-- **[CODEBASE_DOCUMENTATION.md](./CODEBASE_DOCUMENTATION.md)** - Complete technical documentation
+- **[Full Technical Documentation](./documentation.md)** - Complete codebase documentation with indexing
 - **[Coverage Reports](./coverage/lcov-report/index.html)** - Interactive test coverage analysis
 - **Component Gallery** - Run `npm run cypress` to see visual component gallery
 

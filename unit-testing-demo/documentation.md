@@ -81,6 +81,15 @@ The project implements a sophisticated three-layer architecture that promotes se
 
 ## File Structure Mapping
 
+### File Type Index
+| Extension | Purpose | Count | Locations |
+|-----------|---------|-------|-----------|
+| `.tsx` | React components & tests | ~10 | `src/components/`, `tests/` |
+| `.ts` | TypeScript modules | ~8 | `src/core/`, `src/utils/`, `config/` |
+| `.json` | Configuration files | ~5 | Root, `config/`, `coverage/` |
+| `.md` | Documentation | ~2 | Root, docs |
+| `.xml` | Coverage reports | 1 | `coverage/` |
+
 ### Root Directory Structure
 
 ```
@@ -122,6 +131,12 @@ unit-testing-demo/
 
 #### Core Directory (`src/core/`)
 - **Purpose**: Contains foundational architecture classes and type definitions
+
+##### Core Module Index
+| Module | Location | Purpose |
+|--------|----------|---------|
+| Base Classes | `src/core/base/` | Abstract base components and wrappers |
+| Type Definitions | `src/core/types/` | TypeScript interfaces and types |
 
 ##### Base Classes (`src/core/base/`)
 - `ReactBaseTLCWrapper.ts`: Abstract base class for all TLC components
@@ -220,6 +235,15 @@ unit-testing-demo/
   - JSX configuration for React components
 
 ## Dependencies Analysis
+
+### Dependencies Quick Reference
+| Category | Key Libraries | Purpose |
+|----------|--------------|---------|
+| Core Stack | React, React Native, Expo | Foundation framework |
+| UI Components | React Native Paper, Vector Icons | Material Design UI |
+| Navigation | React Navigation | Screen navigation |
+| Testing | Jest, Cypress, Testing Library | Unit and component tests |
+| Build Tools | TypeScript, Babel, Webpack | Compilation and bundling |
 
 ### Production Dependencies
 
@@ -344,6 +368,12 @@ unit-testing-demo/
 
 ## API Documentation
 
+### API Quick Reference
+| Component | Props Interface | Config Interface | Event Types |
+|-----------|----------------|------------------|-------------|
+| TLCButton | `TLCButtonProps` | `TLCButtonConfig` | `TLCButtonEvent` |
+| TLCLabel | `TLCLabelProps` | `TLCLabelConfig` | `TLCLabelEvent` |
+
 ### TLCButton API
 
 ```typescript
@@ -421,6 +451,18 @@ function createLabelConfig(
 
 ## Testing Strategy and Coverage
 
+### Testing Overview
+| Framework | Type | Purpose | Target Coverage |
+|-----------|------|---------|----------------|
+| Jest | Unit Tests | Component logic & state | 90%+ |
+| Cypress | Component Tests | UI & user interactions | Visual validation |
+
+### Test File Index
+| Component | Unit Test | Component Test | Coverage Focus |
+|-----------|-----------|----------------|----------------|
+| TLCButton | `tests/unit/tlc-button.test.tsx` | `tests/component/tlc-button.cy.tsx` | Events, states, rendering |
+| TLCLabel | `tests/unit/tlc-label.test.tsx` | `tests/component/tlc-label.cy.tsx` | Text updates, visibility |
+
 ### Dual Testing Approach
 
 #### Jest Unit Testing
@@ -469,6 +511,29 @@ tests/
 5. **Test User Behavior**: Focus on how users interact
 
 ## Setup and Usage Instructions
+
+### Quick Start
+```bash
+# Clone and install
+git clone <repository-url> && cd unit-testing-demo
+npm install
+
+# Run tests
+npm test              # Jest unit tests
+npm run cypress       # Cypress UI tests
+
+# View coverage
+open coverage/lcov-report/index.html
+```
+
+### Command Reference
+| Command | Description | Use Case |
+|---------|-------------|----------|
+| `npm test` | Run Jest tests once | CI/CD pipelines |
+| `npm run test:watch` | Jest in watch mode | Development |
+| `npm run test:coverage` | Generate coverage report | Quality checks |
+| `npm run cypress` | Open Cypress UI | Interactive testing |
+| `npm run cypress:run` | Run Cypress headless | CI/CD pipelines |
 
 ### Prerequisites
 - Node.js 18+ 
