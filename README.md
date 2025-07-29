@@ -586,7 +586,3 @@ NODE_ENV=development npm run cypress
 - [ ] Component gallery examples added (if applicable)
 
 ---
-
-
-
-
