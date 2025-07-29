@@ -3,6 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
+    "start": "npx expo start",
     "test": "jest --config=config/jest.config.ts",
     "test:watch": "jest --config=config/jest.config.ts --watch",
     "test:coverage": "jest --config=config/jest.config.ts --coverage",

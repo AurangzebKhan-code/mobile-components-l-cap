@@ -8,7 +8,7 @@
         "type": "contained",
         "color": "primary",
         "size": "large",
-        "disabled": false,
+        "disabled": true,
         "loading": false,
         "accessibilityLabel": "Primary action button",
         "ngIf": true

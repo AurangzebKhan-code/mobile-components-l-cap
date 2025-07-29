@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+/// <reference types="cypress/react" />
 /// <reference types="../../cypress/support/component.d.ts" />
 
 import React from 'react'
@@ -6,8 +7,8 @@ import { PaperProvider } from 'react-native-paper'
 import { 
   TLCButton, 
   createButtonConfig, 
-} from '../../src/components/tlc-button'
-import { TLCButtonEvent } from '../../src/core/types/TLCButtonTypes'
+} from '../../projects/tlc-components-mobile/tlc-button'
+import { TLCButtonEvent } from '../../projects/tlc-base'
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <PaperProvider>

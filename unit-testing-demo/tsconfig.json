@@ -1,13 +1,30 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.expo.json"
-    },
-    {
-      "path": "./cypress/tsconfig.json"
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["app/*"],
+      "@tlc-base/*": ["projects/tlc-base/*"],
+      "@tlc-components/*": ["projects/tlc-components-mobile/*"]
     }
+  },
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "projects/**/*.ts",
+    "projects/**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
   ],
-  "compilerOptions": {},
-  "extends": "expo/tsconfig.base"
+  "exclude": [
+    "cypress",
+    "config/cypress.config.ts",
+    "**/*.cy.tsx",
+    "**/*.cy.ts",
+    "tests/component/**/*"
+  ]
 }

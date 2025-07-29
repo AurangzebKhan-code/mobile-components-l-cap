@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["es5", "dom", "es2020"],
-    "types": ["cypress", "node"],
+    "types": ["cypress", "node", "cypress/react"],
     "isolatedModules": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -25,7 +25,7 @@
     "**/*.d.ts",
     "support/global.d.ts",
     "../cypress.config.ts",
-    "../components/**/*.cy.tsx"
+    "../tests/component/**/*.cy.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 import { PaperProvider } from 'react-native-paper';
-import { TLCLabel, createLabelConfig } from '../../src/components/tlc-label';
-import { TLCLabelEvent } from '../../src/core/types/TLCLabelTypes';
+import { TLCLabel, createLabelConfig } from '../../projects/tlc-components-mobile/tlc-label';
+import { TLCLabelEvent } from '../../projects/tlc-base';
 
 interface MockFunction<T extends (...args: any[]) => any> {
   (...args: Parameters<T>): ReturnType<T>;

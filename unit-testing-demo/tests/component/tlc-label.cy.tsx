@@ -1,10 +1,11 @@
 /// <reference types="cypress" />
+/// <reference types="cypress/react" />
 /// <reference types="../../cypress/support/component.d.ts" />
 
 import React from 'react'
 import { PaperProvider } from 'react-native-paper'
-import { TLCLabel, createLabelConfig } from '../../src/components/tlc-label'
-import { TLCLabelEvent } from '../../src/core/types/TLCLabelTypes'
+import { TLCLabel, createLabelConfig } from '../../projects/tlc-components-mobile/tlc-label'
+import { TLCLabelEvent } from '../../projects/tlc-base'
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <PaperProvider>

@@ -5,12 +5,18 @@
     "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["app/*"]
+      "@/*": ["app/*"],
+      "@tlc-base/*": ["projects/tlc-base/*"],
+      "@tlc-components/*": ["projects/tlc-components-mobile/*"]
     }
   },
   "include": [
-    "components/**/*.ts",
-    "components/**/*.tsx",
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "projects/**/*.ts",
+    "projects/**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
   ],

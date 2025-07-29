@@ -10,6 +10,7 @@ const config: Config = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{ts,tsx,js,jsx}',
+    'projects/**/*.{ts,tsx,js,jsx}',
     '!**/coverage/**',
     '!**/node_modules/**',
     '!**/babel.config.js',

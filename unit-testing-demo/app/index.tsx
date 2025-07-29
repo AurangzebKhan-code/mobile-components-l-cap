@@ -1,23 +1,41 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { SafeAreaView, StatusBar, ScrollView, Text, View, StyleSheet, Alert } from 'react-native';
+import { SafeAreaView, StatusBar, ScrollView, Text, View, StyleSheet } from 'react-native';
 import { PaperProvider, Card, Button, Divider } from 'react-native-paper';
-import { TLCButton, createButtonConfig } from '../src/components/tlc-button';
-import { TLCLabel, createLabelConfig } from '../src/components/tlc-label';
-import { TLCButtonConfig } from '../src/core/types/TLCButtonTypes';
-import { TLCLabelConfig } from '../src/core/types/TLCLabelTypes';
+import { TLCButton, createButtonConfig } from '../projects/tlc-components-mobile/tlc-button';
+import { TLCLabel, createLabelConfig } from '../projects/tlc-components-mobile/tlc-label';
+import { TLCButtonConfig } from '../projects/tlc-base';
+import { TLCLabelConfig } from '../projects/tlc-base';
 import mobileConfig from '../src/config/mobile-config.json';
 
+/**
+ * Main testing page component that demonstrates TLC component configuration and JSON overrides.
+ * Provides interactive testing interface for comparing default configurations with JSON-based overrides.
+ */
 export default function Page() {
+  /** Array of recent component event logs for debugging and monitoring */
   const [eventLog, setEventLog] = useState<string[]>([]);
 
+  /**
+   * Logs component events with timestamp and source information
+   * @param source - Source component identifier (e.g., "Default-button1", "JSON-label2")
+   * @param eventType - Type of event that occurred (e.g., "press", "textChanged")
+   * @param data - Optional event payload data
+   */
   const logEvent = useCallback((source: string, eventType: string, data?: any) => {
     const timestamp = new Date().toLocaleTimeString();
     const logEntry = `[${timestamp}] ${source}: ${eventType}${data ? ` - ${JSON.stringify(data)}` : ''}`;
     setEventLog(prev => [logEntry, ...prev.slice(0, 9)]);
   }, []);
 
+  /** Clears the event log display */
   const clearLog = useCallback(() => setEventLog([]), []);
 
+  /**
+   * Compares default configuration with JSON override configuration to identify differences
+   * @param defaultConfig - Default component configuration object
+   * @param jsonConfig - JSON override configuration object
+   * @returns Array of strings describing configuration differences
+   */
   const getPropertyDifferences = useCallback((defaultConfig: any, jsonConfig: any) => {
     const differences: string[] = [];
     Object.keys(jsonConfig).forEach(key => {
@@ -28,6 +46,10 @@ export default function Page() {
     return differences;
   }, []);
 
+  /**
+   * Processes button components from mobile configuration, creating comparison data structures
+   * @returns Array of button component data with default configs, JSON configs, and differences
+   */
   const buttonComponents = useMemo(() => {
     return Object.entries(mobileConfig.components)
       .filter(([, component]) => component.type === 'TLCButton')
@@ -39,6 +61,10 @@ export default function Page() {
       });
   }, [getPropertyDifferences]);
 
+  /**
+   * Processes label components from mobile configuration, creating comparison data structures
+   * @returns Array of label component data with default configs, JSON configs, and differences
+   */
   const labelComponents = useMemo(() => {
     return Object.entries(mobileConfig.components)
       .filter(([, component]) => component.type === 'TLCLabel')
@@ -58,6 +84,7 @@ export default function Page() {
           <Text style={styles.title}>🎯 Interactive JSON Configuration Testing</Text>
           <Text style={styles.subtitle}>Test your JSON overrides with clickable components</Text>
           
+          {/* Button Configuration Testing Section */}
           <Card style={styles.card}>
             <Card.Title title="🔘 Button Configuration Testing" />
             <Card.Content>
@@ -65,6 +92,7 @@ export default function Page() {
                 <View key={key} style={styles.testSection}>
                   <Text style={styles.componentTitle}>📌 {key}</Text>
                   
+                  {/* Side-by-side comparison of default vs JSON override */}
                   <View style={styles.comparisonRow}>
                     <View style={styles.comparisonColumn}>
                       <Text style={styles.columnLabel}>Default Config</Text>
@@ -93,6 +121,7 @@ export default function Page() {
                     </View>
                   </View>
                   
+                  {/* Display configuration differences if any exist */}
                   {differences.length > 0 && (
                     <View style={styles.differencesBox}>
                       <Text style={styles.differencesTitle}>🔍 Overrides Applied:</Text>
@@ -108,6 +137,7 @@ export default function Page() {
             </Card.Content>
           </Card>
 
+          {/* Label Configuration Testing Section */}
           <Card style={styles.card}>
             <Card.Title title="🏷️ Label Configuration Testing" />
             <Card.Content>
@@ -115,6 +145,7 @@ export default function Page() {
                 <View key={key} style={styles.testSection}>
                   <Text style={styles.componentTitle}>📌 {key}</Text>
                   
+                  {/* Side-by-side comparison of default vs JSON override */}
                   <View style={styles.comparisonRow}>
                     <View style={styles.comparisonColumn}>
                       <Text style={styles.columnLabel}>Default Config</Text>
@@ -131,6 +162,7 @@ export default function Page() {
                     <View style={styles.comparisonColumn}>
                       <Text style={styles.columnLabel}>JSON Override</Text>
                       <View style={styles.componentBox}>
+                        {/* Conditionally render label or hidden message based on visibility */}
                         {jsonConfig.visible !== false && jsonConfig.ngIf !== false ? (
                           <TLCLabel 
                             config={jsonConfig}
@@ -148,6 +180,7 @@ export default function Page() {
                     </View>
                   </View>
                   
+                  {/* Display configuration differences if any exist */}
                   {differences.length > 0 && (
                     <View style={styles.differencesBox}>
                       <Text style={styles.differencesTitle}>🔍 Overrides Applied:</Text>
@@ -163,6 +196,7 @@ export default function Page() {
             </Card.Content>
           </Card>
               
+          {/* Live Event Monitoring Section */}
           <Card style={styles.card}>
             <Card.Title title="📋 Live Event Log" />
             <Card.Content>
@@ -173,6 +207,7 @@ export default function Page() {
               >
                 Clear Log
               </Button>
+              {/* Real-time event log display with scrollable content */}
               <View style={styles.eventLogBox}>
                 {eventLog.length > 0 ? (
                   eventLog.map((log, index) => (
@@ -192,12 +227,17 @@ export default function Page() {
   );
 }
 
+/**
+ * Stylesheet containing all component styling definitions with modern design patterns
+ */
 const styles = StyleSheet.create({
+  /** Main container with full height, padding, and light background */
   container: {
     flex: 1,
     padding: 16,
     backgroundColor: '#f5f7fa',
   },
+  /** Large centered title text with dark color and bold weight */
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -205,6 +245,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: '#1a202c',
   },
+  /** Smaller italic subtitle text centered below the main title */
   subtitle: {
     fontSize: 16,
     textAlign: 'center',
@@ -212,10 +253,12 @@ const styles = StyleSheet.create({
     color: '#718096',
     fontStyle: 'italic',
   },
+  /** Card component styling with margin and shadow elevation */
   card: {
     marginBottom: 20,
     elevation: 2,
   },
+  /** Individual test section container with white background and border */
   testSection: {
     marginBottom: 20,
     padding: 12,
@@ -224,17 +267,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e2e8f0',
   },
+  /** Component identifier title with medium size and dark color */
   componentTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 12,
     color: '#2d3748',
   },
+  /** Horizontal flex row for side-by-side component comparison */
   comparisonRow: {
     flexDirection: 'row',
     gap: 12,
     marginBottom: 12,
   },
+  /** Individual comparison column with light background and subtle border */
   comparisonColumn: {
     flex: 1,
     backgroundColor: '#f7fafc',
@@ -243,6 +289,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e2e8f0',
   },
+  /** Column header label with bold weight and centered alignment */
   columnLabel: {
     fontSize: 14,
     fontWeight: 'bold',
@@ -250,6 +297,7 @@ const styles = StyleSheet.create({
     color: '#4a5568',
     textAlign: 'center',
   },
+  /** Component display container with white background and center alignment */
   componentBox: {
     backgroundColor: '#ffffff',
     padding: 12,
@@ -261,17 +309,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e2e8f0',
   },
+  /** Small text for displaying configuration properties */
   configText: {
     fontSize: 12,
     color: '#4a5568',
     marginBottom: 2,
   },
+  /** Muted italic text for showing hidden component states */
   hiddenText: {
     fontSize: 14,
     color: '#a0aec0',
     fontStyle: 'italic',
     textAlign: 'center',
   },
+  /** Highlighted box for displaying configuration differences with teal accent */
   differencesBox: {
     backgroundColor: '#e6fffa',
     padding: 10,
@@ -280,21 +331,25 @@ const styles = StyleSheet.create({
     borderLeftColor: '#38b2ac',
     marginTop: 8,
   },
+  /** Bold title text for the differences section */
   differencesTitle: {
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 6,
     color: '#234e52',
   },
+  /** Individual difference item text with bullet point styling */
   differenceText: {
     fontSize: 12,
     color: '#2d3748',
     marginBottom: 2,
   },
+  /** Divider line with subtle background color and top margin */
   divider: {
     marginTop: 12,
     backgroundColor: '#e2e8f0',
   },
+  /** Dark terminal-style container for event log display with scrolling */
   eventLogBox: {
     backgroundColor: '#1a202c',
     padding: 12,
@@ -302,12 +357,14 @@ const styles = StyleSheet.create({
     maxHeight: 200,
     minHeight: 60,
   },
+  /** Monospace font styling for event log entries with green color */
   eventText: {
     fontSize: 11,
     fontFamily: 'monospace',
     color: '#68d391',
     marginBottom: 2,
   },
+  /** Placeholder text shown when no events are available */
   noEventsText: {
     fontSize: 14,
     color: '#a0aec0',
@@ -315,6 +372,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginTop: 8,
   },
+  /** Clear button styling with bottom margin for spacing */
   clearButton: {
     marginBottom: 12,
   },

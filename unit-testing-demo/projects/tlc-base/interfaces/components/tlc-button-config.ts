@@ -1,4 +1,4 @@
-import { BaseComponentConfig, EventMeta } from '../base/ReactBaseTLCWrapper';
+import { BaseComponentConfig, EventMeta } from './common';
 import { ViewStyle, TextStyle } from 'react-native';
 
 export interface TLCButtonConfig extends BaseComponentConfig {
