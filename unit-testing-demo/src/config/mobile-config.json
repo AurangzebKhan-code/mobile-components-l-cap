@@ -1,0 +1,115 @@
+{
+  "components": {
+    "primaryButton": {
+      "type": "TLCButton",
+      "config": {
+        "id": "primary-btn",
+        "label": "Primary Action",
+        "type": "contained",
+        "color": "primary",
+        "size": "large",
+        "disabled": false,
+        "loading": false,
+        "accessibilityLabel": "Primary action button",
+        "ngIf": true
+      }
+    },
+    "secondaryButton": {
+      "type": "TLCButton",
+      "config": {
+        "id": "secondary-btn",
+        "label": "Secondary Action",
+        "type": "outlined",
+        "color": "accent",
+        "size": "medium",
+        "disabled": false,
+        "loading": false,
+        "longPress": true,
+        "accessibilityLabel": "Secondary action button"
+      }
+    },
+    "loadingButton": {
+      "type": "TLCButton",
+      "config": {
+        "id": "loading-btn",
+        "label": "Loading...",
+        "type": "contained",
+        "color": "primary",
+        "size": "medium",
+        "disabled": true,
+        "loading": true,
+        "stl": {
+          "backgroundColor": "#125B4E",
+          "borderRadius": 12
+        }
+      }
+    },
+    "welcomeLabel": {
+      "type": "TLCLabel",
+      "config": {
+        "id": "welcome-lbl",
+        "text": "Welcome to Mobile App",
+        "visible": true,
+        "disabled": false,
+        "stl": {
+          "fontSize": 24,
+          "fontWeight": "bold",
+          "color": "#125B4E",
+          "textAlign": "center",
+          "marginBottom": 20
+        }
+      }
+    },
+    "errorLabel": {
+      "type": "TLCLabel",
+      "config": {
+        "id": "error-lbl",
+        "text": "Something went wrong!",
+        "visible": true,
+        "disabled": false,
+        "stl": {
+          "fontSize": 16,
+          "color": "#FF0000",
+          "fontWeight": "500",
+          "textAlign": "left"
+        }
+      }
+    },
+    "hiddenLabel": {
+      "type": "TLCLabel",
+      "config": {
+        "id": "hidden-lbl",
+        "text": "This label should be hidden",
+        "visible": false,
+        "ngIf": false
+      }
+    },
+    "dynamicLabel": {
+      "type": "TLCLabel",
+      "config": {
+        "id": "dynamic-lbl",
+        "text": "Dynamic Content",
+        "visible": true,
+        "stl": {
+          "fontSize": 18,
+          "color": "#333333",
+          "fontStyle": "italic"
+        }
+      }
+    }
+  },
+  "testScenarios": {
+    "buttonPress": {
+      "componentId": "primary-btn",
+      "expectedEvents": ["initialized", "press"]
+    },
+    "labelTextChange": {
+      "componentId": "dynamic-lbl",
+      "expectedEvents": ["initialized", "textChanged"]
+    },
+    "componentVisibility": {
+      "componentId": "hidden-lbl",
+      "shouldBeVisible": false
+    }
+  }
+}

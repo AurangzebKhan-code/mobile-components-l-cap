@@ -1,0 +1,23 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["app/*"]
+    }
+  },
+  "include": [
+    "components/**/*.ts",
+    "components/**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ],
+  "exclude": [
+    "cypress",
+    "cypress.config.js",
+    "**/*.cy.tsx",
+    "**/*.cy.ts"
+  ]
+}
