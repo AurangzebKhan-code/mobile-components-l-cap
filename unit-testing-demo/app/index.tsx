@@ -99,7 +99,9 @@ export default function Page() {
                       <View style={styles.componentBox}>
                         <TLCButton 
                           config={defaultConfig}
-                          onEvent={(e) => logEvent(`Default-${key}`, e.type, e.data)}
+                          tlcClick={(e) => logEvent(`Default-${key}`, 'click', { label: e.label, x: e.eventMeta?.x, y: e.eventMeta?.y })}
+                          tlcInit={() => logEvent(`Default-${key}`, 'initialized')}
+                          tlcDestroy={() => logEvent(`Default-${key}`, 'destroyed')}
                         />
                       </View>
                       <Text style={styles.configText}>Label: "{defaultConfig.label}"</Text>
@@ -112,7 +114,9 @@ export default function Page() {
                       <View style={styles.componentBox}>
                         <TLCButton 
                           config={jsonConfig}
-                          onEvent={(e) => logEvent(`JSON-${key}`, e.type, e.data)}
+                          tlcClick={(e) => logEvent(`JSON-${key}`, 'click', { label: e.label, x: e.eventMeta?.x, y: e.eventMeta?.y })}
+                          tlcInit={() => logEvent(`JSON-${key}`, 'initialized')}
+                          tlcDestroy={() => logEvent(`JSON-${key}`, 'destroyed')}
                         />
                       </View>
                       <Text style={styles.configText}>Label: "{jsonConfig.label}"</Text>
@@ -152,7 +156,9 @@ export default function Page() {
                       <View style={styles.componentBox}>
                         <TLCLabel 
                           config={defaultConfig}
-                          onEvent={(e) => logEvent(`Default-${key}`, e.type, e.data)}
+                          tlcTextChanged={(e) => logEvent(`Default-${key}`, 'textChanged', { text: e.text, previousText: e.previousText })}
+                          tlcInit={() => logEvent(`Default-${key}`, 'initialized')}
+                          tlcDestroy={() => logEvent(`Default-${key}`, 'destroyed')}
                         />
                       </View>
                       <Text style={styles.configText}>Text: "{defaultConfig.text}"</Text>
@@ -166,7 +172,9 @@ export default function Page() {
                         {jsonConfig.visible !== false && jsonConfig.ngIf !== false ? (
                           <TLCLabel 
                             config={jsonConfig}
-                            onEvent={(e) => logEvent(`JSON-${key}`, e.type, e.data)}
+                            tlcTextChanged={(e) => logEvent(`JSON-${key}`, 'textChanged', { text: e.text, previousText: e.previousText })}
+                            tlcInit={() => logEvent(`JSON-${key}`, 'initialized')}
+                            tlcDestroy={() => logEvent(`JSON-${key}`, 'destroyed')}
                           />
                         ) : (
                           <Text style={styles.hiddenText}>🚫 Component Hidden</Text>

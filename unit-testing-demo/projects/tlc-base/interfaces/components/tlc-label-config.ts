@@ -23,5 +23,7 @@ export interface TLCLabelEvent {
 
 export interface TLCLabelProps {
   config: TLCLabelConfig;
-  onEvent?: (event: TLCLabelEvent) => void;
+  tlcTextChanged?: (event: { text: string; previousText: string }) => void; // Text change events
+  tlcInit?: () => void; // Component initialized
+  tlcDestroy?: () => void; // Component destroyed
 }

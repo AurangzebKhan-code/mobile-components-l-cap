@@ -1,5 +1,6 @@
-import { BaseComponentConfig, EventMeta } from './common';
+import { BaseComponentConfig } from './common';
 import { ViewStyle, TextStyle } from 'react-native';
+import { TLCClickEvent } from './event';
 
 export interface TLCButtonConfig extends BaseComponentConfig {
   label: string;
@@ -21,20 +22,12 @@ export interface TLCButtonConfig extends BaseComponentConfig {
   ngIf?: boolean | (() => boolean);
 }
 
-export interface TLCButtonEvent {
-  type: 'press' | 'longPress' | 'initialized' | 'destroyed';
-  componentId: string;
-  data?: {
-    label?: string;
-    status?: string;
-  };
-  eventMeta?: EventMeta;
-  timestamp: number;
-}
 
 export interface TLCButtonProps {
   config: TLCButtonConfig;
-  onEvent?: (event: TLCButtonEvent) => void;
+  tlcClick?: (event: TLCClickEvent) => void; // Click events
+  tlcInit?: () => void; // Component initialized
+  tlcDestroy?: () => void; // Component destroyed
 }
 
 export const getButtonMode = (type: string): 'text' | 'outlined' | 'contained' | 'elevated' | 'contained-tonal' => {

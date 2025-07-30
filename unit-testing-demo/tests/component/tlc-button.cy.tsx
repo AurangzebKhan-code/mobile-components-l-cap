@@ -8,7 +8,7 @@ import {
   TLCButton, 
   createButtonConfig, 
 } from '../../projects/tlc-components-mobile/tlc-button'
-import { TLCButtonEvent } from '../../projects/tlc-base'
+import { TLCClickEvent } from '../../projects/tlc-base'
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <PaperProvider>
@@ -36,20 +36,18 @@ describe('TlcButton Component - Visual & Interaction Tests', () => {
   it('handles click interactions and event handling', () => {
     const config = createButtonConfig('interaction-test', { label: 'Click Me' })
     let eventCount = 0
-    let lastEvent: TLCButtonEvent | null = null
+    let lastEvent: TLCClickEvent | null = null
 
-    const handleEvent = (event: TLCButtonEvent): void => {
-      if (event.type === 'press') {
-        eventCount++
-        lastEvent = event
-      }
+    const handleClick = (event: TLCClickEvent): void => {
+      eventCount++
+      lastEvent = event
     }
 
     cy.mount(
       <TestWrapper>
         <TLCButton 
           config={config} 
-          onEvent={handleEvent}
+          tlcClick={handleClick}
         />
       </TestWrapper>
     )
@@ -60,8 +58,8 @@ describe('TlcButton Component - Visual & Interaction Tests', () => {
       .then(() => {
         expect(eventCount).to.equal(1)
         expect(lastEvent).to.not.be.null
-        expect(lastEvent?.type).to.equal('press')
-        expect(lastEvent?.componentId).to.equal('interaction-test')
+        expect(lastEvent?.id).to.equal('interaction-test')
+        expect(lastEvent?.label).to.equal('Click Me')
       })
   })
 

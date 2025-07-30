@@ -3,8 +3,8 @@ export { default } from './tlc-button.component';
 
 export type {
   TLCButtonConfig,
-  TLCButtonEvent,
   TLCButtonProps,
+  TLCClickEvent,
 } from '../../tlc-base';
 
 export {

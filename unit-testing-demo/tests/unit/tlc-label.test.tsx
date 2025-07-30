@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import { PaperProvider } from 'react-native-paper';
 import { TLCLabel, createLabelConfig } from '../../projects/tlc-components-mobile/tlc-label';
-import { TLCLabelEvent } from '../../projects/tlc-base';
+// No longer need TLCLabelEvent import since we use separate handlers
 
 interface MockFunction<T extends (...args: any[]) => any> {
   (...args: Parameters<T>): ReturnType<T>;
@@ -59,7 +59,7 @@ describe('TlcLabel - Core Functionality Tests', () => {
   });
 
   it('emits textChanged event when text changes', () => {
-    const mockOnEvent = jest.fn<(event: TLCLabelEvent) => void>();
+    const mockTlcTextChanged = jest.fn<(event: { text: string; previousText: string }) => void>();
     const mockSetState = jest.fn();
     const config = createLabelConfig('setState-test', { 
       text: 'Initial Text',
@@ -67,7 +67,7 @@ describe('TlcLabel - Core Functionality Tests', () => {
     });
 
     const { rerender } = renderWithProvider(
-      <TLCLabel config={config} onEvent={mockOnEvent} />
+      <TLCLabel config={config} tlcTextChanged={mockTlcTextChanged} />
     );
 
     const updatedConfig = createLabelConfig('setState-test', { 
@@ -77,48 +77,32 @@ describe('TlcLabel - Core Functionality Tests', () => {
 
     rerender(
       <PaperProvider>
-        <TLCLabel config={updatedConfig} onEvent={mockOnEvent} />
+        <TLCLabel config={updatedConfig} tlcTextChanged={mockTlcTextChanged} />
       </PaperProvider>
     );
 
-    const textChangedEvents = mockOnEvent.mock.calls.filter(
-      call => call[0].type === 'textChanged'
-    );
-    expect(textChangedEvents.length).toBe(1);
-    expect(textChangedEvents[0][0]).toEqual(
-      expect.objectContaining({
-        type: 'textChanged',
-        componentId: 'setState-test',
-        data: {
-          text: 'Updated Text',
-          previousText: 'Initial Text'
-        }
-      })
-    );
+    expect(mockTlcTextChanged).toHaveBeenCalledWith({
+      text: 'Updated Text',
+      previousText: 'Initial Text'
+    });
 
     expect(mockSetState).toHaveBeenCalledWith(updatedConfig);
   });
 
   it('calls init callback on mount', () => {
     const initMock = jest.fn<() => void>();
-    const mockOnEvent = jest.fn<(event: TLCLabelEvent) => void>();
+    const mockTlcInit = jest.fn<() => void>();
     const config = createLabelConfig('init-test', { 
       text: 'Init Test'
     });
     (config as any).init = initMock;
 
     renderWithProvider(
-      <TLCLabel config={config} onEvent={mockOnEvent} />
+      <TLCLabel config={config} tlcInit={mockTlcInit} />
     );
 
     expect(initMock).toHaveBeenCalled();
-    
-    expect(mockOnEvent).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: 'initialized',
-        componentId: 'init-test'
-      })
-    );
+    expect(mockTlcInit).toHaveBeenCalled();
   });
 
   it('handles visibility control with ngIf', () => {

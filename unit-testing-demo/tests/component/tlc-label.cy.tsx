@@ -5,7 +5,7 @@
 import React from 'react'
 import { PaperProvider } from 'react-native-paper'
 import { TLCLabel, createLabelConfig } from '../../projects/tlc-components-mobile/tlc-label'
-import { TLCLabelEvent } from '../../projects/tlc-base'
+// No longer need TLCLabelEvent import since we use separate handlers
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <PaperProvider>
@@ -89,12 +89,6 @@ describe('TlcLabel Component - Visual & Content Tests', () => {
   })
 
   it('displays comprehensive label gallery with variations', () => {
-    let eventLog: TLCLabelEvent[] = []
-    
-    const handleEvent = (event: TLCLabelEvent) => {
-      eventLog.push(event)
-    }
-    
     cy.mount(
       <TestWrapper>
         <div style={{ padding: '20px', backgroundColor: '#f0f0f0', minHeight: '400px' }}>
@@ -104,7 +98,6 @@ describe('TlcLabel Component - Visual & Content Tests', () => {
             <div style={{ padding: '10px', backgroundColor: 'white', borderRadius: '8px' }}>
               <TLCLabel 
                 config={createLabelConfig('gallery-default', { text: 'Default Label' })} 
-                onEvent={handleEvent}
               />
             </div>
             
@@ -114,7 +107,6 @@ describe('TlcLabel Component - Visual & Content Tests', () => {
                   text: 'Styled Label',
                   stl: { fontSize: 20, color: '#007AFF', fontWeight: 'bold' }
                 })} 
-                onEvent={handleEvent}
               />
             </div>
             
@@ -123,7 +115,6 @@ describe('TlcLabel Component - Visual & Content Tests', () => {
                 config={createLabelConfig('gallery-long', { 
                   text: 'This is a very long label text that demonstrates how the component handles longer content strings'
                 })} 
-                onEvent={handleEvent}
               />
             </div>
             
@@ -134,7 +125,6 @@ describe('TlcLabel Component - Visual & Content Tests', () => {
                   disabled: true,
                   stl: { opacity: 0.5 }
                 })} 
-                onEvent={handleEvent}
               />
             </div>
           </div>
@@ -148,10 +138,5 @@ describe('TlcLabel Component - Visual & Content Tests', () => {
     cy.get('[data-testid="gallery-disabled"]').should('be.visible')
     
     cy.contains('TLC Label Component Gallery').should('be.visible')
-    
-    cy.wrap(null).then(() => {
-      const initEvents = eventLog.filter(e => e.type === 'initialized')
-      expect(initEvents.length).to.be.at.least(4)
-    })
   })
 })

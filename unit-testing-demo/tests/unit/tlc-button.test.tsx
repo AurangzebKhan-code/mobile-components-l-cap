@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import { PaperProvider } from 'react-native-paper';
 import { TLCButton, createButtonConfig } from '../../projects/tlc-components-mobile/tlc-button';
-import { TLCButtonEvent } from '../../projects/tlc-base';
+import { TLCClickEvent } from '../../projects/tlc-base';
 
 interface MockFunction<T extends (...args: any[]) => any> {
   (...args: Parameters<T>): ReturnType<T>;
@@ -46,28 +46,28 @@ describe('TlcButton - Core Functionality Tests', () => {
     expect(getByTestId('tlc-button')).toBeTruthy();
   });
 
-  it('handles onEvent press events with proper metadata', () => {
+  it('handles tlcClick events with proper metadata', () => {
     const config = createButtonConfig('press-test', { label: 'Press Test' });
-    const mockOnEvent = jest.fn<(event: TLCButtonEvent) => void>();
+    const mockTlcClick = jest.fn<(event: TLCClickEvent) => void>();
 
     const { getByTestId } = renderWithProvider(
       <TLCButton 
         config={config} 
-        onEvent={mockOnEvent}
+        tlcClick={mockTlcClick}
       />
     );
 
     const button = getByTestId('press-test');
     fireEvent.press(button);
 
-    expect(mockOnEvent).toHaveBeenCalledWith(
+    expect(mockTlcClick).toHaveBeenCalledWith(
       expect.objectContaining({
-        type: 'press',
-        componentId: 'press-test',
-        data: expect.objectContaining({
-          label: 'Press Test'
-        }),
-        timestamp: expect.any(Number)
+        id: 'press-test',
+        label: 'Press Test',
+        eventMeta: expect.objectContaining({
+          timestamp: expect.any(Number),
+          pointerType: 'touch'
+        })
       })
     );
   });
@@ -89,7 +89,7 @@ describe('TlcButton - Core Functionality Tests', () => {
   });
 
   it('triggers lifecycle events correctly', () => {
-    const mockOnEvent = jest.fn<(event: TLCButtonEvent) => void>();
+    const mockTlcInit = jest.fn<() => void>();
     const initMock = jest.fn<() => void>();
     const config = createButtonConfig('lifecycle-test', { 
       label: 'Lifecycle Test'
@@ -99,17 +99,11 @@ describe('TlcButton - Core Functionality Tests', () => {
     renderWithProvider(
       <TLCButton 
         config={config} 
-        onEvent={mockOnEvent}
+        tlcInit={mockTlcInit}
       />
     );
 
-    expect(mockOnEvent).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: 'initialized',
-        componentId: 'lifecycle-test'
-      })
-    );
-    
+    expect(mockTlcInit).toHaveBeenCalled();
     expect(initMock).toHaveBeenCalled();
   });
 
@@ -118,27 +112,21 @@ describe('TlcButton - Core Functionality Tests', () => {
       label: 'Disabled Button',
       disabled: true
     });
-    const mockOnEvent = jest.fn<(event: TLCButtonEvent) => void>();
+    const mockTlcClick = jest.fn<(event: TLCClickEvent) => void>();
+    const mockTlcInit = jest.fn<() => void>();
 
     const { getByTestId } = renderWithProvider(
       <TLCButton 
         config={config} 
-        onEvent={mockOnEvent}
+        tlcClick={mockTlcClick}
+        tlcInit={mockTlcInit}
       />
     );
 
     const button = getByTestId('disabled-test');
     fireEvent.press(button);
 
-    expect(mockOnEvent).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: 'initialized'
-      })
-    );
-    
-    const pressEvents = mockOnEvent.mock.calls.filter(
-      call => call[0].type === 'press'
-    );
-    expect(pressEvents.length).toBe(0);
+    expect(mockTlcInit).toHaveBeenCalled();
+    expect(mockTlcClick).not.toHaveBeenCalled();
   });
 });

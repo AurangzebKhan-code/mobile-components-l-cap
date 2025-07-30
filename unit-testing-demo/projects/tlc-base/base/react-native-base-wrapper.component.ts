@@ -1,30 +1,14 @@
 import { ViewStyle, TextStyle } from 'react-native';
-import { BaseComponentConfig, EventMeta } from '../interfaces/components/common';
+import { BaseComponentConfig } from '../interfaces/components/common';
 
-/**
- * Standardized event structure for all TLC component lifecycle and user interaction events
- */
-export interface TLCComponentEvent {
-  /** Event type identifier (e.g., 'initialized', 'press', 'textChanged', 'destroyed') */
-  type: string;
-  /** Unique identifier of the component instance that triggered the event */
-  componentId: string;
-  /** Unix timestamp when the event occurred */
-  timestamp: number;
-  /** Optional event-specific payload data */
-  data?: any;
-  /** Additional metadata for advanced event handling */
-  eventMeta?: EventMeta;
-}
 
 /**
  * Abstract base class providing foundational architecture for all TLC components.
  * Handles configuration management, style computation, lifecycle events, and common patterns.
  * 
  * @template T - Component configuration type extending BaseComponentConfig
- * @template E - Event type extending TLCComponentEvent
  */
-export abstract class ReactBaseTLCWrapper<T extends BaseComponentConfig, E extends TLCComponentEvent = TLCComponentEvent> {
+export abstract class ReactBaseTLCWrapper<T extends BaseComponentConfig> {
   /** Current merged component configuration object */
   private _config!: T;
   /** Immutable component identifier for accessibility and testing */
@@ -36,16 +20,11 @@ export abstract class ReactBaseTLCWrapper<T extends BaseComponentConfig, E exten
   /** Previous configuration state for change detection and comparison */
   private _previousConfig?: T;
   
-  /** Optional callback function for handling component events */
-  public onEvent?: (e: E) => void;
-
   /**
-   * Initializes component with configuration and optional event handler
+   * Initializes component with configuration
    * @param input - Component configuration object
-   * @param onEvent - Optional callback for component events
    */
-  constructor(input: T, onEvent?: (e: E) => void) {
-    this.onEvent = onEvent;
+  constructor(input: T) {
     this.useLifecycle(input);
   }
 
@@ -187,14 +166,11 @@ export abstract class ReactBaseTLCWrapper<T extends BaseComponentConfig, E exten
   }
 
   /**
-   * Emits component initialization event when component is ready
+   * Component initialization hook - override in child classes to implement specific initialization
    */
   public initializeEvent(): void {
-    this.onEvent?.({
-      type: 'initialized',
-      componentId: this.staticId,
-      timestamp: Date.now()
-    } as E);
+    // Override in child classes to implement component-specific initialization
+    // Base implementation does nothing - child classes handle their own event emission
   }
 
   /**
@@ -215,15 +191,11 @@ export abstract class ReactBaseTLCWrapper<T extends BaseComponentConfig, E exten
   }
 
   /**
-   * Component cleanup with destruction event emission and lifecycle callback execution
+   * Component cleanup hook - override in child classes to implement specific cleanup
    */
   public cleanup(): void {
-    this.onEvent?.({
-      type: 'destroyed',
-      componentId: this.staticId,
-      timestamp: Date.now()
-    } as E);
-    
+    // Override in child classes to implement component-specific cleanup and event emission
+    // Base implementation handles standard lifecycle cleanup
     const cfg = this.config();
     
     if (cfg.destroy && this._initialized) {
